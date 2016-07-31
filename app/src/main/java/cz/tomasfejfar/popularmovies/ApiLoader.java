@@ -32,26 +32,32 @@ public class ApiLoader {
         ArrayList<Movie> moviesList = new ArrayList<>();
         try {
             JSONObject response = new JSONObject(jsonString);
-            JSONArray results = response.getJSONArray("results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject item = results.getJSONObject(i);
-                moviesList.add(new Movie(
-                        item.getString("title"),
-                        item.getString("poster_path"),
-                        item.getDouble("vote_average"),
-                        item.getDouble("popularity"),
-                        item.optString("backdrop"),
-                        item.getString("overview"),
-                        item.getString("release_date"),
-                        item.getInt("id")
-                ));
-            }
-            Log.v(LOG_TAG, results.toString());
+            moviesList = parseJsonToMoviesList(response);
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Can't parse JSON");
             Log.e(LOG_TAG, e.getMessage());
         }
         return moviesList;
+    }
+
+    private ArrayList<Movie> parseJsonToMoviesList(JSONObject response) throws JSONException {
+        ArrayList<Movie> moviesList = new ArrayList<>();
+        JSONArray results = response.getJSONArray("results");
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject item = results.getJSONObject(i);
+            moviesList.add(new Movie(
+                    item.getString("title"),
+                    item.getString("poster_path"),
+                    item.getDouble("vote_average"),
+                    item.getDouble("popularity"),
+                    item.optString("backdrop"),
+                    item.getString("overview"),
+                    item.getString("release_date"),
+                    item.getInt("id")
+            ));
+        }
+        return moviesList;
+
     }
 
     private String makeHttpRequest(String uri) {
