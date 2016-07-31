@@ -21,7 +21,7 @@ public class ApiLoader {
 
     public static final String LOG_TAG = "ApiLoader";
 
-    public Movie[] loadPopular() {
+    public ArrayList<Movie> loadPopular() {
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("https")
                 .authority("api.themoviedb.org")
@@ -51,12 +51,10 @@ public class ApiLoader {
             Log.e(LOG_TAG, "Can't parse JSON");
             Log.e(LOG_TAG, e.getMessage());
         }
-        Movie[] toReturn = new Movie[moviesList.size()];
-        toReturn = moviesList.toArray(toReturn);
-        return toReturn;
+        return moviesList;
     }
 
-    public String makeHttpRequest(String uri) {
+    private String makeHttpRequest(String uri) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
