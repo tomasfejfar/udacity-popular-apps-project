@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -26,13 +25,9 @@ public class MoviesArrayAdapter extends ArrayAdapter<Movie> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_movies, parent, false);
         }
-        TextView title = (TextView) convertView.findViewById(R.id.movie_list_item_title);
-        title.setText(movie.getName());
         ImageView image = (ImageView) convertView.findViewById(R.id.movie_list_item_image);
         Picasso.with(getContext())
-                .load(movie.getImage())
-                .error(getContext().getResources().getDrawable(R.drawable.error))
-                .placeholder(getContext().getResources().getDrawable(R.drawable.loading))
+                .load("http://image.tmdb.org/t/p/w185/".concat(movie.getImage()))
                 .resize(185, 185)
                 .centerCrop()
                 .into(image);

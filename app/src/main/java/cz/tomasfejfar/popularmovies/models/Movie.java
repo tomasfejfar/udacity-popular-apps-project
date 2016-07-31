@@ -1,21 +1,19 @@
 package cz.tomasfejfar.popularmovies.models;
 
-import java.util.Date;
-
 public class Movie {
     String name;
 
     String image;
 
-    Float rating;
+    Double rating;
 
-    Float popularity;
+    Double popularity;
 
     String backdrop;
 
     String overview;
 
-    Date releaseDate;
+    String releaseDate;
 
     int id;
 
@@ -25,7 +23,7 @@ public class Movie {
         this.id = id;
     }
 
-    public Movie(String name, String image, Float rating, Float popularity, String backdrop, String overview, Date releaseDate, int id) {
+    public Movie(String name, String image, Double rating, Double popularity, String backdrop, String overview, String releaseDate, int id) {
         this.name = name;
         this.image = image;
         this.rating = rating;
@@ -44,11 +42,11 @@ public class Movie {
         return image;
     }
 
-    public Float getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public Float getPopularity() {
+    public Double getPopularity() {
         return popularity;
     }
 
@@ -60,7 +58,7 @@ public class Movie {
         return overview;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 

@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import cz.tomasfejfar.popularmovies.models.Movie;
+import cz.tomasfejfar.popularmovies.tasks.FetchMoviesTask;
 
 public class MoviesListFragment extends Fragment {
 
@@ -17,21 +18,11 @@ public class MoviesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_movies_list, container, false);
-        Movie[] data = {
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/75GFqrnHMKqkcNZ2wWefWXfqtMV.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/9KQX22BeFzuNM66pBA6JbiaJ7Mi.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-                new Movie("Interstellar", "http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", 1),
-        };
-        MoviesArrayAdapter adapter = new MoviesArrayAdapter(getActivity(), Arrays.asList(data));
+        MoviesArrayAdapter adapter = new MoviesArrayAdapter(getActivity(), new ArrayList<Movie>());
+        FetchMoviesTask task = new FetchMoviesTask();
+        task.setAdapter(adapter);
+
+        task.execute(FetchMoviesTask.BEST_RATED);
         GridView list = (GridView) layout.findViewById(R.id.movie_list);
         list.setAdapter(adapter);
         return layout;
