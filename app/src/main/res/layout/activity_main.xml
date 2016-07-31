@@ -10,4 +10,12 @@
     tools:context="cz.tomasfejfar.popularmovies.MainActivity">
 
 
+    <GridView
+        android:id="@+id/movie_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:columnWidth="185dp"
+        android:nestedScrollingEnabled="true"
+        android:numColumns="auto_fit" />
 </FrameLayout>
