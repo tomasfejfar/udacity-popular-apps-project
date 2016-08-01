@@ -9,20 +9,24 @@ import org.json.JSONObject;
 public class Movie implements Parcelable {
 
 
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
     String name;
-
     String image;
-
     Double rating;
-
     Double popularity;
-
     String backdrop;
-
     String overview;
-
     String releaseDate;
-
     int id;
 
     public Movie(String name, String image, int id) {
@@ -53,17 +57,18 @@ public class Movie implements Parcelable {
         id = in.readInt();
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
+    public static Movie fromJsonObject(JSONObject item) throws JSONException {
+        return new Movie(
+                item.getString("title"),
+                item.getString("poster_path"),
+                item.getDouble("vote_average"),
+                item.getDouble("popularity"),
+                item.optString("backdrop"),
+                item.getString("overview"),
+                item.getString("release_date"),
+                item.getInt("id")
+        );
+    }
 
     public String getName() {
         return name;
@@ -95,19 +100,6 @@ public class Movie implements Parcelable {
 
     public int getId() {
         return id;
-    }
-
-    public static Movie fromJsonObject(JSONObject item) throws JSONException {
-        return new Movie(
-                item.getString("title"),
-                item.getString("poster_path"),
-                item.getDouble("vote_average"),
-                item.getDouble("popularity"),
-                item.optString("backdrop"),
-                item.getString("overview"),
-                item.getString("release_date"),
-                item.getInt("id")
-        );
     }
 
     @Override
