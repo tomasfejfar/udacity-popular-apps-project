@@ -14,5 +14,11 @@
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:gravity="center" />
-
+    <ProgressBar
+        android:id="@+id/movie_fragment_progressbar"
+        style="@style/Base.Widget.AppCompat.Spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+    </ProgressBar>
 </FrameLayout>

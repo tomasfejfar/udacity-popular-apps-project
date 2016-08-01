@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import cz.tomasfejfar.popularmovies.models.Movie;
-import cz.tomasfejfar.popularmovies.tasks.FetchMoviesTask;
 
 public class ApiLoader {
     public static final int MOST_POPULAR = 1;
