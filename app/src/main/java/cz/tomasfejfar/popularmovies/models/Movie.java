@@ -1,5 +1,8 @@
 package cz.tomasfejfar.popularmovies.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Movie {
     String name;
 
@@ -64,5 +67,18 @@ public class Movie {
 
     public int getId() {
         return id;
+    }
+
+    public static Movie fromJsonObject(JSONObject item) throws JSONException {
+        return new Movie(
+                item.getString("title"),
+                item.getString("poster_path"),
+                item.getDouble("vote_average"),
+                item.getDouble("popularity"),
+                item.optString("backdrop"),
+                item.getString("overview"),
+                item.getString("release_date"),
+                item.getInt("id")
+        );
     }
 }

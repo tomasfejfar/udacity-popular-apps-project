@@ -22,7 +22,7 @@ public class MoviesListFragment extends Fragment {
         FetchMoviesTask task = new FetchMoviesTask();
         task.setAdapter(adapter);
 
-        task.execute(FetchMoviesTask.BEST_RATED);
+        task.execute(FetchMoviesTask.TOP_RATED);
         GridView list = (GridView) layout.findViewById(R.id.movie_list);
         list.setAdapter(adapter);
         return layout;

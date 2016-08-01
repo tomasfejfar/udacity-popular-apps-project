@@ -16,28 +16,53 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import cz.tomasfejfar.popularmovies.models.Movie;
+import cz.tomasfejfar.popularmovies.tasks.FetchMoviesTask;
 
 public class ApiLoader {
 
-    public static final String LOG_TAG = "ApiLoader";
+    public static final String LOG_TAG = ApiLoader.class.getSimpleName();
 
     public ArrayList<Movie> loadPopular() {
-        Uri.Builder uriBuilder = new Uri.Builder();
-        uriBuilder.scheme("https")
-                .authority("api.themoviedb.org")
-                .appendEncodedPath("/3/movie/popular")
-                .appendQueryParameter("api_key", BuildConfig.MOVIEDB_API_KEY);
+        return loadData(FetchMoviesTask.MOST_POPULAR);
+    }
 
-        String jsonString = makeHttpRequest(uriBuilder.toString());
+    public ArrayList<Movie> loadTopRated() {
+        return loadData(FetchMoviesTask.TOP_RATED);
+    }
+
+    private ArrayList<Movie> loadData(int endpointType) {
+        String jsonString = makeHttpRequest(getApiUri(endpointType));
         ArrayList<Movie> moviesList = new ArrayList<>();
+        if (jsonString == null) {
+            Log.e(LOG_TAG, "Failed to get JSON");
+            return moviesList;
+        }
+
         try {
             JSONObject response = new JSONObject(jsonString);
             moviesList = parseJsonToMoviesList(response);
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "Can't parse JSON");
-            Log.e(LOG_TAG, e.getMessage());
+            Log.e(LOG_TAG, "Can't parse JSON: ".concat(e.getMessage()));
         }
         return moviesList;
+    }
+
+    private String getApiUri(int endpointType) {
+        Uri.Builder uriBuilder = new Uri.Builder();
+        uriBuilder.scheme("https")
+                .authority("api.themoviedb.org")
+                .appendEncodedPath("/3/movie/")
+                .appendQueryParameter("page", "4")
+                .appendQueryParameter("api_key", BuildConfig.MOVIEDB_API_KEY);
+
+        switch (endpointType) {
+            case FetchMoviesTask.TOP_RATED:
+                uriBuilder.appendEncodedPath("top_rated");
+                break;
+            case FetchMoviesTask.MOST_POPULAR:
+                uriBuilder.appendEncodedPath("popular");
+        }
+        return uriBuilder.toString();
     }
 
     private ArrayList<Movie> parseJsonToMoviesList(JSONObject response) throws JSONException {
@@ -45,16 +70,7 @@ public class ApiLoader {
         JSONArray results = response.getJSONArray("results");
         for (int i = 0; i < results.length(); i++) {
             JSONObject item = results.getJSONObject(i);
-            moviesList.add(new Movie(
-                    item.getString("title"),
-                    item.getString("poster_path"),
-                    item.getDouble("vote_average"),
-                    item.getDouble("popularity"),
-                    item.optString("backdrop"),
-                    item.getString("overview"),
-                    item.getString("release_date"),
-                    item.getInt("id")
-            ));
+            moviesList.add(Movie.fromJsonObject(item));
         }
         return moviesList;
 
@@ -65,37 +81,28 @@ public class ApiLoader {
         BufferedReader reader = null;
         try {
             URL httpUrl = new URL(uri);
-            // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) httpUrl.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
-            // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
-                // Nothing to do.
                 return null;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
             while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
                 buffer.append(line).append("\n");
             }
 
             if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
                 return null;
             }
             return buffer.toString();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            // If the code didn't successfully get the weather data, there's no point in attemping
-            // to parse it.
+            Log.e(LOG_TAG, e.getMessage(), e);
             return null;
         } finally {
             if (urlConnection != null) {

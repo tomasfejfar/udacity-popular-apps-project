@@ -10,7 +10,7 @@ import cz.tomasfejfar.popularmovies.models.Movie;
 
 public class FetchMoviesTask extends AsyncTask<Integer, Void, ArrayList<Movie>> {
     public static final int MOST_POPULAR = 1;
-    public static final int  BEST_RATED = 2;
+    public static final int TOP_RATED = 2;
 
     private MoviesArrayAdapter adapter;
 
