@@ -23,15 +23,13 @@ public class MoviesListFragment extends Fragment {
         FetchMoviesTask task = new FetchMoviesTask();
         task.setAdapter(adapter);
 
-        task.execute(FetchMoviesTask.TOP_RATED);
+        task.execute(ApiLoader.TOP_RATED);
         GridView list = (GridView) layout.findViewById(R.id.movie_list);
         list.setAdapter(adapter);
         return layout;
     }
 
     public class FetchMoviesTask extends AsyncTask<Integer, Void, ArrayList<Movie>> {
-        public static final int MOST_POPULAR = 1;
-        public static final int TOP_RATED = 2;
 
         private MoviesArrayAdapter adapter;
 

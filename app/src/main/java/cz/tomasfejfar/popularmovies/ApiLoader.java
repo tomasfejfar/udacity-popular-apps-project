@@ -19,15 +19,17 @@ import cz.tomasfejfar.popularmovies.models.Movie;
 import cz.tomasfejfar.popularmovies.tasks.FetchMoviesTask;
 
 public class ApiLoader {
+    public static final int MOST_POPULAR = 1;
+    public static final int TOP_RATED = 2;
 
     public static final String LOG_TAG = ApiLoader.class.getSimpleName();
 
     public ArrayList<Movie> loadPopular() {
-        return loadData(FetchMoviesTask.MOST_POPULAR);
+        return loadData(ApiLoader.MOST_POPULAR);
     }
 
     public ArrayList<Movie> loadTopRated() {
-        return loadData(FetchMoviesTask.TOP_RATED);
+        return loadData(ApiLoader.TOP_RATED);
     }
 
     private ArrayList<Movie> loadData(int endpointType) {
@@ -56,10 +58,10 @@ public class ApiLoader {
                 .appendQueryParameter("api_key", BuildConfig.MOVIEDB_API_KEY);
 
         switch (endpointType) {
-            case FetchMoviesTask.TOP_RATED:
+            case ApiLoader.TOP_RATED:
                 uriBuilder.appendEncodedPath("top_rated");
                 break;
-            case FetchMoviesTask.MOST_POPULAR:
+            case ApiLoader.MOST_POPULAR:
                 uriBuilder.appendEncodedPath("popular");
         }
         return uriBuilder.toString();
