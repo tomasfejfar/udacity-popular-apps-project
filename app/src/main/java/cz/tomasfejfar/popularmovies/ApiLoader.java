@@ -32,7 +32,7 @@ public class ApiLoader {
         return loadData(ApiLoader.TOP_RATED);
     }
 
-    private ArrayList<Movie> loadData(int endpointType) {
+    public ArrayList<Movie> loadData(int endpointType) {
         String jsonString = makeHttpRequest(getApiUri(endpointType));
         ArrayList<Movie> moviesList = new ArrayList<>();
         if (jsonString == null) {
