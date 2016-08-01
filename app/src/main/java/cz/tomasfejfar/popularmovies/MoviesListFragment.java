@@ -1,16 +1,17 @@
 package cz.tomasfejfar.popularmovies;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import cz.tomasfejfar.popularmovies.models.Movie;
-import cz.tomasfejfar.popularmovies.tasks.FetchMoviesTask;
 
 public class MoviesListFragment extends Fragment {
 
@@ -27,5 +28,33 @@ public class MoviesListFragment extends Fragment {
         list.setAdapter(adapter);
         return layout;
     }
+
+    public class FetchMoviesTask extends AsyncTask<Integer, Void, ArrayList<Movie>> {
+        public static final int MOST_POPULAR = 1;
+        public static final int TOP_RATED = 2;
+
+        private MoviesArrayAdapter adapter;
+
+        @Override
+        protected ArrayList<Movie> doInBackground(Integer... params) {
+            ApiLoader loader = new ApiLoader();
+            return loader.loadPopular();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Movie> movies) {
+            if (movies != null) {
+                adapter.clear();
+                adapter.addAll(movies);
+            } else {
+                Toast.makeText(getContext(), "Could not fetch movies data", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        public void setAdapter(MoviesArrayAdapter adapter) {
+            this.adapter = adapter;
+        }
+    }
+
 
 }
