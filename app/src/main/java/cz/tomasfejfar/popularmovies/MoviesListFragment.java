@@ -69,7 +69,8 @@ public class MoviesListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Movie movie = moviesArrayAdapter.getItem(position);
-                Intent detailIntent = new Intent(getContext(), )
+                Intent detailIntent = new Intent(getContext(), DetailActivity.class);
+                //detailIntent.putExtra
             }
         });
         list.setAdapter(moviesArrayAdapter);
