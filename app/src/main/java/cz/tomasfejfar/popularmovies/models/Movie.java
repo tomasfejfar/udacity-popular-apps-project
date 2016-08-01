@@ -50,7 +50,7 @@ public class Movie implements Parcelable {
         name = in.readString();
         image = in.readString();
         rating = in.readDouble();
-        popularity = in.readDouble()
+        popularity = in.readDouble();
         backdrop = in.readString();
         overview = in.readString();
         releaseDate = in.readString();
