@@ -52,7 +52,7 @@ public class ApiLoader {
         uriBuilder.scheme("https")
                 .authority("api.themoviedb.org")
                 .appendEncodedPath("/3/movie/")
-                .appendQueryParameter("page", "4")
+                .appendQueryParameter("page", "1")
                 .appendQueryParameter("api_key", BuildConfig.MOVIEDB_API_KEY);
 
         switch (endpointType) {
