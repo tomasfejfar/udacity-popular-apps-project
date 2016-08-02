@@ -70,7 +70,8 @@ public class MoviesListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Movie movie = moviesArrayAdapter.getItem(position);
                 Intent detailIntent = new Intent(getContext(), DetailActivity.class);
-                //detailIntent.putExtra
+                detailIntent.putExtra(Movie.class.getCanonicalName(), movie);
+                startActivity(detailIntent);
             }
         });
         list.setAdapter(moviesArrayAdapter);
