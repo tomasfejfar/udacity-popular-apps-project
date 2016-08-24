@@ -63,7 +63,7 @@ public class Movie implements Parcelable {
                 item.getString("poster_path"),
                 item.getDouble("vote_average"),
                 item.getDouble("popularity"),
-                item.optString("backdrop"),
+                item.optString("backdrop_path"),
                 item.getString("overview"),
                 item.getString("release_date"),
                 item.getInt("id")

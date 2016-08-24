@@ -13,4 +13,6 @@
     <string name="detail_overview_default">This will be description</string>
     <string name="detail_release_date_default">21. 1. 2016</string>
     <string name="detail_release_date_desc">Release date: </string>
+    <string name="detail_rating_default">Rating</string>
+    <string name="detail_popularity_default">Popularity</string>
 </resources>
