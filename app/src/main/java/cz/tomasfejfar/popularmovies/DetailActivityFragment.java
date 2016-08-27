@@ -40,16 +40,13 @@ public class DetailActivityFragment extends Fragment {
         if (movie == null) {
             throw new RuntimeException("Failed to pull parcelable from intent!");
         }
-        TextView name = (TextView) layout.findViewById(R.id.detail_name);
-        name.setText(movie.getName());
+        getActivity().setTitle(movie.getName());
         TextView rating = (TextView) layout.findViewById(R.id.detail_rating);
         rating.setText(getContext().getString(R.string.detail_rating_default, movie.getRating()));
         TextView releaseDate = (TextView) layout.findViewById(R.id.detail_release_date);
         releaseDate.setText(getContext().getString(R.string.detail_release_date, movie.getReleaseDate()));
         ImageView image = (ImageView) layout.findViewById(R.id.detail_image);
-        picasso.load("http://image.tmdb.org/t/p/w185/".concat(movie.getImage()))
-                .resize(185, 185)
-                .centerCrop()
+        picasso.load("http://image.tmdb.org/t/p/w500/".concat(movie.getImage()))
                 .into(image);
         TextView overview = (TextView) layout.findViewById(R.id.detail_overview);
         overview.setText(movie.getOverview());
