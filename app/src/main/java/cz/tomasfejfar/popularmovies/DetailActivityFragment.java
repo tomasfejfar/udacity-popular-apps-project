@@ -1,8 +1,5 @@
 package cz.tomasfejfar.popularmovies;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import cz.tomasfejfar.popularmovies.models.Movie;
 
@@ -56,27 +51,6 @@ public class DetailActivityFragment extends Fragment {
                 .resize(185, 185)
                 .centerCrop()
                 .into(image);
-        final LinearLayout mainLayout = (LinearLayout) layout.findViewById(R.id.detail_linear_layout);
-        Log.d(LOG_TAG, "http://image.tmdb.org/t/p/w185/".concat(movie.getBackdrop()));
-
-        picasso.load("http://image.tmdb.org/t/p/w185/".concat(movie.getBackdrop()))
-                .into(new Target(){
-
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        mainLayout.setBackground(new BitmapDrawable(getContext().getResources(), bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(final Drawable errorDrawable) {
-                        Log.d("TAG", "FAILED");
-                    }
-
-                    @Override
-                    public void onPrepareLoad(final Drawable placeHolderDrawable) {
-                        Log.d("TAG", "Prepare Load");
-                    }
-                });
         TextView overview = (TextView) layout.findViewById(R.id.detail_overview);
         overview.setText(movie.getOverview());
         return layout;
